@@ -83,8 +83,8 @@
                 {
                     "name": "",
                     "id": "19de2d85-9f8a-4127-a8b5-4f6010aee30a",
-                    "path": "<Mouse>/press",
-                    "interactions": "",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Fire",

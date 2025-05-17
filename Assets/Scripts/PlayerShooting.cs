@@ -6,7 +6,7 @@ public class PlayerShooting : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform gunLeft;
     public Transform gunRight;
-    public float fireRate = 0.1f; 
+    public float fireRate = 0.1f;
     public float bulletSpeed = 50f;
 
     private bool isShooting = false;
@@ -25,17 +25,22 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+    
     public void OnFire(InputAction.CallbackContext context)
     {
         if (context.started)
+        {
             isShooting = true;
+            shootTimer = 0f; 
+        }
         else if (context.canceled)
+        {
             isShooting = false;
+        }
     }
 
     void Shoot()
     {
-       
         FireBulletFrom(gunLeft);
         FireBulletFrom(gunRight);
     }
