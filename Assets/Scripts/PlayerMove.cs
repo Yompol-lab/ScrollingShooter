@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -31,4 +32,15 @@ public class PlayerMove : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        collision.gameObject.CompareTag("Enemy");
+        Destroy(gameObject);
+        SceneManager.LoadScene("Moriste");
+    }
+
+
+
+
 }

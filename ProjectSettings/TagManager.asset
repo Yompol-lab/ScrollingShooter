@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - homing_missile
+  - PlayerBullet
+  - Obstacle
   layers:
   - Default
   - TransparentFX
