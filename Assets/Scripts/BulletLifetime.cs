@@ -3,24 +3,30 @@ using UnityEngine;
 public class BulletLifetime : MonoBehaviour
 {
     public float lifeTime = 3f;
+    public int damage = 1;
 
     void Start()
     {
-        Destroy(gameObject, lifeTime); 
+        Destroy(gameObject, lifeTime);
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject); 
+        Destroy(gameObject);
     }
 
+    [System.Obsolete]
     void OnTriggerEnter(Collider other)
     {
-        
         if (other.CompareTag("Enemy"))
         {
-            Destroy(other.gameObject); 
-            Destroy(gameObject);       
+            HelicopterEnemy enemy = other.GetComponent<HelicopterEnemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+
+            Destroy(gameObject);
         }
     }
 }

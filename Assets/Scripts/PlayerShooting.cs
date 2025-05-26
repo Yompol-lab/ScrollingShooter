@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour
@@ -6,11 +6,18 @@ public class PlayerShooting : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform gunLeft;
     public Transform gunRight;
+    public Transform gunExtra1;
+    public Transform gunExtra2;
     public float fireRate = 0.1f;
     public float bulletSpeed = 50f;
+    public HUDManager hudManager;
 
     private bool isShooting = false;
     private float shootTimer;
+
+    private bool extraGunsActive = false;
+
+    public AudioSource gunAudio;
 
     void Update()
     {
@@ -25,17 +32,22 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    
     public void OnFire(InputAction.CallbackContext context)
     {
         if (context.started)
         {
             isShooting = true;
-            shootTimer = 0f; 
+            shootTimer = 0f;
+
+            if (gunAudio != null && !gunAudio.isPlaying)
+                gunAudio.Play();
         }
         else if (context.canceled)
         {
             isShooting = false;
+
+            if (gunAudio != null && gunAudio.isPlaying)
+                gunAudio.Stop();
         }
     }
 
@@ -43,6 +55,12 @@ public class PlayerShooting : MonoBehaviour
     {
         FireBulletFrom(gunLeft);
         FireBulletFrom(gunRight);
+
+        if (extraGunsActive)
+        {
+            FireBulletFrom(gunExtra1);
+            FireBulletFrom(gunExtra2);
+        }
     }
 
     void FireBulletFrom(Transform gun)
@@ -53,5 +71,21 @@ public class PlayerShooting : MonoBehaviour
         {
             rb.linearVelocity = gun.forward * bulletSpeed;
         }
+    }
+
+    public void ActivateExtraGuns(float duration)
+    {
+        if (!extraGunsActive)
+        {
+            extraGunsActive = true;
+            hudManager?.ActivatePowerUpTimer(duration);
+            Invoke(nameof(DeactivateExtraGuns), duration);
+        }
+    }
+
+
+    void DeactivateExtraGuns()
+    {
+        extraGunsActive = false;
     }
 }
