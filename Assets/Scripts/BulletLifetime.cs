@@ -13,18 +13,20 @@ public class BulletLifetime : MonoBehaviour
     [System.Obsolete]
     void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.CompareTag("Enemy"))
         {
-            HelicopterEnemy enemy = other.GetComponent<HelicopterEnemy>();
-            if (enemy != null)
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
             {
-                enemy.TakeDamage(damage);
+                enemyHealth.TakeDamage(damage);
+                Destroy(gameObject);
+                return;
             }
             Destroy(gameObject);
         }
 
-       
+
         if (other.CompareTag("Boss"))
         {
             BossEnemy boss = other.GetComponent<BossEnemy>();

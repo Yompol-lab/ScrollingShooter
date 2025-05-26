@@ -3,7 +3,8 @@ using UnityEngine;
 public class HelicopterEnemy : MonoBehaviour
 {
     public Transform player;
-    public float stopDistance = 10f;
+    public float stopDistance = 22f;
+    public float shootingDistance = 30f;
     public float speed = 5f;
 
     public GameObject bulletPrefab;
@@ -15,32 +16,45 @@ public class HelicopterEnemy : MonoBehaviour
 
     public float obstacleCheckDistance = 5f;
 
-    public int maxHealth = 3;
-    private int currentHealth;
-
     private float nextFireTime;
 
     void Start()
     {
-        currentHealth = maxHealth;
+        if (player == null)
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                player = playerObject.transform;
+            }
+        }
     }
 
     void Update()
     {
         if (player == null) return;
-        AvoidObstacles();
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        if (distance > stopDistance)
+        if (distance > shootingDistance)
         {
-            Vector3 targetPosition = player.position;
-            Vector3 zigzagOffset = transform.right * Mathf.Sin(Time.time * zigzagFrequency) * zigzagAmplitude;
-            targetPosition += zigzagOffset;
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+            MoveTowardsPlayer();
+        }
+        else if (distance > stopDistance && distance <= shootingDistance)
+        {
+
+            MoveTowardsPlayer();
+
+            if (Time.time >= nextFireTime)
+            {
+                Shoot();
+                nextFireTime = Time.time + 1f / fireRate;
+            }
         }
         else
         {
+
             if (Time.time >= nextFireTime)
             {
                 Shoot();
@@ -48,6 +62,21 @@ public class HelicopterEnemy : MonoBehaviour
             }
         }
 
+        RotateTowardsPlayer();
+    }
+
+    void MoveTowardsPlayer()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        Vector3 zigzag = transform.right * Mathf.Sin(Time.time * zigzagFrequency) * zigzagAmplitude;
+        Vector3 movement = (direction * speed * Time.deltaTime) + (zigzag * Time.deltaTime);
+        transform.position += movement;
+
+        AvoidObstacles();
+    }
+
+    void RotateTowardsPlayer()
+    {
         Vector3 lookDirection = player.position - transform.position;
         lookDirection.y = 0;
         if (lookDirection != Vector3.zero)
@@ -65,39 +94,14 @@ public class HelicopterEnemy : MonoBehaviour
     void AvoidObstacles()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, obstacleCheckDistance);
+
         foreach (Collider hit in hits)
         {
             if (hit.CompareTag("Obstacle") || hit.CompareTag("PlayerBullet"))
             {
-                transform.position += Vector3.up * speed * 2 * Time.deltaTime;
+                transform.position += Vector3.up * speed * Time.deltaTime;
                 break;
             }
         }
     }
-
-    [System.Obsolete]
-    public void TakeDamage(int amount)
-    {
-        currentHealth -= amount;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    [System.Obsolete]
-    void Die()
-    {
-        HUDManager hud = FindObjectOfType<HUDManager>();
-        if (hud != null)
-        {
-            hud.AddScore(500);
-        }
-
-        GameManager.Instance.EnemyDefeated();
-
-        Destroy(gameObject);
-    }
-
 }

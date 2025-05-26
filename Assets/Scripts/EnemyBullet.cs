@@ -2,19 +2,36 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    public int damage = 25;
+    public float lifeTime = 5f;
+    public float speed = 20f;
+    public float damageAmount = 10f;
+
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+
+
+        rb.linearVelocity = transform.forward * speed;
+
+
+        Destroy(gameObject, lifeTime);
+    }
 
     void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            PlayerHealth player = other.GetComponent<PlayerHealth>();
+            if (player != null)
             {
-                playerHealth.TakeDamage(damage);
+                player.TakeDamage(damageAmount);
             }
-
-            Destroy(gameObject); 
         }
+
+
+        Destroy(gameObject);
     }
 }
