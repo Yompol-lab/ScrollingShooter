@@ -95,6 +95,9 @@ public class HelicopterEnemy : MonoBehaviour
             hud.AddScore(500);
         }
 
+        GameManager.Instance.EnemyDefeated();
+
         Destroy(gameObject);
     }
+
 }
