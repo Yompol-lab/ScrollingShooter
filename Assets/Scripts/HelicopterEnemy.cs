@@ -89,6 +89,7 @@ public class HelicopterEnemy : MonoBehaviour
         {
             Instantiate(bulletPrefab, point.position, point.rotation);
         }
+        
     }
 
     void AvoidObstacles()
@@ -104,4 +105,7 @@ public class HelicopterEnemy : MonoBehaviour
             }
         }
     }
+
+
+
 }

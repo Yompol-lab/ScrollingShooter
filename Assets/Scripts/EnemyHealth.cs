@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -7,9 +6,13 @@ public class EnemyHealth : MonoBehaviour
     public float currentHealth;
     public GameObject prefabAlMorir;
 
+    private GameManager gameManager;
+
+    [System.Obsolete]
     void Start()
     {
         currentHealth = maxHealth;
+        gameManager = GameObject.FindObjectOfType<GameManager>(); 
     }
 
     public void TakeDamage(float amount)
@@ -42,7 +45,10 @@ public class EnemyHealth : MonoBehaviour
             }
         }
 
-       
+        if (gameManager != null) 
+        {
+            gameManager.EnemyDefeated(); 
+        }
 
         Destroy(gameObject);
     }

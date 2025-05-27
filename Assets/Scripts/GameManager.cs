@@ -2,41 +2,33 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-
-    private int enemiesDefeated = 0;
-    public int enemiesToDefeatForBoss = 10;
-
+    public int enemiesToDefeat = 10;
     public GameObject bossPrefab;
     public Transform bossSpawnPoint;
 
+    private int enemiesDefeated = 0;
     private bool bossSpawned = false;
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
 
     public void EnemyDefeated()
     {
         enemiesDefeated++;
 
-        if (enemiesDefeated >= enemiesToDefeatForBoss && !bossSpawned)
+        if (!bossSpawned && enemiesDefeated >= enemiesToDefeat)
         {
             SpawnBoss();
         }
     }
 
-    void SpawnBoss()
+    private void SpawnBoss()
     {
-        Instantiate(bossPrefab, bossSpawnPoint.position, bossSpawnPoint.rotation);
-        bossSpawned = true;
+        if (bossPrefab != null && bossSpawnPoint != null)
+        {
+            Instantiate(bossPrefab, bossSpawnPoint.position, bossSpawnPoint.rotation);
+            bossSpawned = true;
+        }
+        else
+        {
+            Debug.LogWarning("Boss Prefab o SpawnPoint no asignado en GameManager");
+        }
     }
 }

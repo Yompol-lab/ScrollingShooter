@@ -8,14 +8,10 @@ public class EnemyBullet : MonoBehaviour
 
     private Rigidbody rb;
 
+    [System.Obsolete]
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
-
-        rb.linearVelocity = transform.forward * speed;
-
-
+        GetComponent<Rigidbody>().velocity = transform.forward * speed;
         Destroy(gameObject, lifeTime);
     }
 
@@ -32,6 +28,6 @@ public class EnemyBullet : MonoBehaviour
         }
 
 
-        Destroy(gameObject);
+        
     }
 }

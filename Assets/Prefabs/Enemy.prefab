@@ -191,6 +191,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8533514456092941953, guid: 2216d97797b56544d85f1cefc541070c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5333141739150473442}
+    - targetCorrespondingSourceObject: {fileID: 8533514456092941953, guid: 2216d97797b56544d85f1cefc541070c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4061273728293310728}
+    - targetCorrespondingSourceObject: {fileID: 8533514456092941953, guid: 2216d97797b56544d85f1cefc541070c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8338791437848720947}
     - targetCorrespondingSourceObject: {fileID: 2458738767805781687, guid: 2216d97797b56544d85f1cefc541070c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6650913688472258503}
@@ -244,16 +250,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   stopDistance: 30
+  shootingDistance: 30
   speed: 30
   bulletPrefab: {fileID: 2898265665044147038, guid: 7d497c2b5579db343aad1ab1d995702a, type: 3}
   firePoints:
   - {fileID: 5617589752287229513}
   - {fileID: 1672888623526846919}
-  fireRate: 1
+  fireRate: 2
   zigzagFrequency: 1
   zigzagAmplitude: 1
   obstacleCheckDistance: 5
-  maxHealth: 3
 --- !u!65 &5333141739150473442
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -275,6 +281,48 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.5337977, y: 4.240189, z: 5.3197465}
   m_Center: {x: -0.04166865, y: 1.6200948, z: 2.159836}
+--- !u!114 &-4061273728293310728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723559028607204500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffa393d4d3e7a74d8f21569f47dab8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  prefabAlMorir: {fileID: 0}
+--- !u!54 &8338791437848720947
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723559028607204500}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &4100366493045548590 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9018161952264078395, guid: 2216d97797b56544d85f1cefc541070c, type: 3}

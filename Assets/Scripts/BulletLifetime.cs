@@ -23,7 +23,7 @@ public class BulletLifetime : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-            Destroy(gameObject);
+            
         }
 
 
